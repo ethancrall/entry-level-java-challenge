@@ -62,6 +62,7 @@ public class MockEmployee implements Employee {
     @Override
     public void setFirstName(String name) {
         this.firstName = name;
+        updateDerivedFields();
     }
 
     @Override
@@ -72,6 +73,19 @@ public class MockEmployee implements Employee {
     @Override
     public void setLastName(String name) {
         this.lastName = name;
+        updateDerivedFields();
+    }
+
+    /**
+     * Updates fullName and email variables once firstName & lastName are set.
+     * Protects against null values for fullName and email when the no-arg
+     * constructor is called (when requestBody is deserialized into MockEmployee object)
+     */
+    private void updateDerivedFields() {
+        if (firstName != null && lastName != null) {
+            this.fullName = firstName + " " + lastName;
+            this.email = firstName.toLowerCase() + "." + lastName.toLowerCase() + "@reliaquest.com";
+        }
     }
 
     @Override

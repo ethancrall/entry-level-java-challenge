@@ -53,7 +53,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Employee createEmployee(Employee employee) {
         if (isDuplicateEntry(employee)) {
             throw new ResponseStatusException(
-                    HttpStatus.CONFLICT, "Employee " + employee.getFullName() + " already exists");
+                    HttpStatus.CONFLICT,
+                    "Employee " + employee.getFirstName() + " " + employee.getLastName() + " already exists");
         }
 
         MockEmployee mockEmployee = new MockEmployee(
@@ -63,11 +64,8 @@ public class EmployeeServiceImpl implements EmployeeService {
                 employee.getAge(),
                 employee.getJobTitle());
         mockEmployee.setUuid(UUID.randomUUID());
-        mockEmployee.setFullName(employee.getFirstName() + " " + employee.getLastName());
-        mockEmployee.setEmail(employee.getFirstName().toLowerCase() + "."
-                    + employee.getLastName().toLowerCase() + "@reliaquest.com");
         mockEmployee.setContractHireDate(Instant.now());
-        
+
         employees.add(mockEmployee);
         return mockEmployee;
     }
