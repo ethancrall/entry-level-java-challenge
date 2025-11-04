@@ -53,8 +53,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Employee createEmployee(Employee employee) {
         if (isDuplicateEntry(employee)) {
             throw new ResponseStatusException(
-                    HttpStatus.CONFLICT,
-                    "Employee " + employee.getFirstName() + " " + employee.getLastName() + " already exists");
+                    HttpStatus.CONFLICT, "Employee " + employee.getFullName() + " already exists");
         }
 
         MockEmployee mockEmployee = new MockEmployee(
